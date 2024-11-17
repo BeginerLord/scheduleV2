@@ -1,18 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { PaginatedResponse } from "../../model/PaginatedResponse";
-import { DocentDto } from "../model/docent";
+import { PaginatedResponse } from "../../model/PaginatedResponse"; 
 import { GetAllDocent } from "../services";
- 
+import { DocentDto } from "../model/docent";
+
 export const useGetAllDocent = (
-  page = 0,
-  size = 10,
-  sortBy = "name",
-  direction: "asc"
+  page: number = 0,
+  size: number = 10,
+  sortBy: string = "userEntity.username",
+  direction: string = "asc"
 ) => {
-  const { data: docent, isLoading } = useQuery<PaginatedResponse<DocentDto>>({
+  const { isLoading, data, isError, error } = useQuery<PaginatedResponse<DocentDto>>({
     queryKey: ["docent", page, size, sortBy, direction],
     queryFn: () => GetAllDocent(page, size, sortBy, direction),
-    staleTime: 5000,
+    staleTime: 5000, // Mantener datos frescos durante 5 segundos
   });
-  return { docent, isLoading };
+
+  return { isLoading, docent: data, isError, error };
 };

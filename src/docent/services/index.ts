@@ -15,13 +15,19 @@ export const DeleteDocent = async (dni: string) => {
 export const GetAllDocent = async (
   page: number = 0,
   size: number = 10,
-  sortBy: string = "name",
+  sortBy: string = "userEntity.username",
   direction: string = "asc"
-) => {
+): Promise<PaginatedResponse<DocentDto>> => {
+    
   const url = `/teacher?page=${page}&size=${size}&sortBy=${sortBy}&direction=${direction}`;
-  const { data } = await scheduleApi.get(url);
+  
+  const { data } = await scheduleApi.get(url); // Asegúrate de que 'scheduleApi' esté configurado correctamente
   return data as PaginatedResponse<DocentDto>;
 };
+
+
+
+
 
 export const SearchDocentByDni = async (dni: string) => {
   const { data } = await scheduleApi.get(`/teacher/${dni}`);
