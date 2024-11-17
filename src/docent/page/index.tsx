@@ -34,5 +34,7 @@ export const Docent = () => {
       </div>
     </>
   );
-};
-export default Docent;
+}
+  export default Docent;
+
+

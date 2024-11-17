@@ -15,13 +15,16 @@ export const DeleteDocent = async (dni: string) => {
 export const GetAllDocent = async (
   page: number = 0,
   size: number = 10,
-  sortBy: string = "name",
+  sortBy: string = "userEntity.username",
   direction: string = "asc"
 ) => {
   const url = `/teacher?page=${page}&size=${size}&sortBy=${sortBy}&direction=${direction}`;
   const { data } = await scheduleApi.get(url);
   return data as PaginatedResponse<DocentDto>;
 };
+
+
+
 
 export const SearchDocentByDni = async (dni: string) => {
   const { data } = await scheduleApi.get(`/teacher/${dni}`);

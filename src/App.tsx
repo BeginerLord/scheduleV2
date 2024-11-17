@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "./Login/Page";
 import Docent from "./docent/page";
+import DocentList from "./docent/Components/boardDocent";
 
 function App() {
 
@@ -8,9 +9,10 @@ function App() {
     <BrowserRouter>
     <Routes>
     <Route path={"/login"} element={<Login />} />
-    <Route path={"/creardocente"} element={<Docent />} />
+    <Route path={"/creardocente"} element={<Docent/>} />
+    <Route path="/verdocente" element={<DocentList/>} />
 
- <Route path="/" element={<Navigate to="/login" />} />
+ <Route path="/" element={<Navigate to="/login"/>} />
     </Routes>
     </BrowserRouter>
   )

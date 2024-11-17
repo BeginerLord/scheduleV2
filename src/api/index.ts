@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 const { VITE_API_URL, VITE_SECRET_KEY } = import.meta.env;
 
@@ -15,12 +15,12 @@ scheduleApi.interceptors.request.use(
 
     if (jwt) {
       // Configurar el header de autorización si el token es válido
-      config.headers.Authorization =`Bearer${jwt}`;
+      config.headers.Authorization = `Bearer ${jwt}`;
     }
 
     return config;
   },
   (error: any) => {
     return Promise.reject(error);
-  }
+  }
 );
