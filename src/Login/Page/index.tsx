@@ -32,7 +32,7 @@ import useCustomerForm from "../../hooksCustomForms/useCustomerForm";
     },
   });
   const Login = () => {
-    const { isPending, loginMutation: login } = useSingup();
+    const { isPending, useSingup: login } = useSingup();
   
     const loginSuccess = (data: LoginDto) => {
       login({ ...data });

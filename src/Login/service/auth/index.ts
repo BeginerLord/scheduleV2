@@ -1,16 +1,21 @@
-import { jwtDecode } from "jwt-decode";
+ import { jwtDecode } from "jwt-decode";
 import { scheduleApi } from "../../../api";
-import { LoginDto } from "../../model/login";
-
-
+ 
 interface JwtPayload {
-  role: string;
+  authorities: string;
 }
-export const AuthUser = async (login: LoginDto) => {
-  const { data } = await scheduleApi.post("/login", login);
+export const login = async ({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) => {
+  const { data } = await scheduleApi.post("/login", { username, password });
+  localStorage.setItem("jwt", data.jwt);
 
-  localStorage.setItem("token", data.jwt);
   const decodedToken = jwtDecode<JwtPayload>(data.jwt);
-  const role = decodedToken.role;
-  return { ...data, role };
+  const authorities = decodedToken.authorities;
+
+  return { ...data, authorities };
 };

@@ -7,7 +7,7 @@ export interface ScheduleStudent{
     courseLevel: string;
     docentName: string;
     startTime: string;
-    endTime: PathString;
+    endTime: string;
     room: string;
     day: string;
 }

@@ -11,11 +11,11 @@ export const scheduleApi = axios.create({
 scheduleApi.interceptors.request.use(
   (config: any) => {
     // Obtener el token directamente del localStorage
-    const token = localStorage.getItem("token");
+    const jwt = localStorage.getItem("jwt");
 
-    if (token) {
+    if (jwt) {
       // Configurar el header de autorización si el token es válido
-      config.headers.Authorization =`Bearer${token}`;
+      config.headers.Authorization =`Bearer${jwt}`;
     }
 
     return config;

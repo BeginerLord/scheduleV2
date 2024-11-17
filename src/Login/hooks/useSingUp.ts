@@ -1,31 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { AuthUser } from "../service/auth";
+import { login } from "../service/auth";
+ 
+export const useSingup = () => {
+  const navigate = useNavigate();
 
-export const useSingup=()=>{
-    const navigate = useNavigate();
-    const{isPending, mutate: loginMutation}=useMutation({
+  const { mutate: loginMutate, isPending } = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      const { authorities } = data;
+      const path =
+      authorities === "ROLE_ADMIN"
+          ? "/creardocente"
+          : authorities === "USER"
+          ? "/usuario"
+          : authorities === "AGENT"
+          ? "/agente"
+          : "/";
 
-        mutationFn:AuthUser,
-        onSuccess:(data)=>{
+      navigate(path);
+    },
+  });
 
-            const { role } = data;
-            switch (role) {
-              case "ADMIN":
-                navigate("/admin-dashboard");
-                break;
-              case "TEACHER":
-                navigate("/teacher-dashboard");
-                break;
-              case "STUDENT":
-                navigate("/student-dashboard");
-                break;
-              default:
-                navigate("/login");
-                break;
-            }
-        }
-    });
-
-    return{isPending, loginMutation}
-}
+  return { useSingup: loginMutate, isPending };
+};
