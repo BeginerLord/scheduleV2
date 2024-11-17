@@ -17,11 +17,14 @@ export const GetAllDocent = async (
   size: number = 10,
   sortBy: string = "userEntity.username",
   direction: string = "asc"
-) => {
+): Promise<PaginatedResponse<DocentDto>> => {
+    
   const url = `/teacher?page=${page}&size=${size}&sortBy=${sortBy}&direction=${direction}`;
-  const { data } = await scheduleApi.get(url);
+  
+  const { data } = await scheduleApi.get(url); // Asegúrate de que 'scheduleApi' esté configurado correctamente
   return data as PaginatedResponse<DocentDto>;
 };
+
 
 
 
