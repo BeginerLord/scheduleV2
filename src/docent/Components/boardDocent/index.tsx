@@ -1,24 +1,21 @@
 import { Box, Paper, CircularProgress, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useGetAllDocent } from "../../hooks";
- 
-const DocentList = () => {
-  // Llamamos al hook para obtener los docentes
-  const {  data,isLoading } = useGetAllDocent(0, 10, "name", "asc");
 
-  // Definimos las columnas para el DataGrid
+const DocentList = () => {
+  const { docent, isLoading, error } = useGetAllDocent(0, 10, "userEntity.username", "asc");
+
   const columns: GridColDef[] = [
-    { field: "profile", headerName: "Perfil", width: 150 },
-    { field: "username", headerName: "Usuario", width: 150 },
-    { field: "fullName", headerName: "Nombre Completo", width: 200 },
-    { field: "dni", headerName: "DNI", width: 150 },
-    { field: "phoneNumber", headerName: "Teléfono", width: 180 },
-    { field: "address", headerName: "Dirección", width: 250 },
-    { field: "email", headerName: "Correo", width: 200 },
+    { field: "profile", headerName: "Perfil", width: 150, align: "center" },
+    { field: "username", headerName: "Usuario", width: 150, align: "center" },
+    { field: "fullName", headerName: "Nombre Completo", width: 200, align: "left" },
+    { field: "dni", headerName: "DNI", width: 150, align: "center" },
+    { field: "phoneNumber", headerName: "Teléfono", width: 180, align: "center" },
+    { field: "address", headerName: "Dirección", width: 250, align: "left" },
+    { field: "email", headerName: "Correo", width: 200, align: "left" },
   ];
 
-  // Transformamos los datos en las filas necesarias para el DataGrid
-  const rows = data?.content?.map((docent, index) => ({
+  const rows = docent?.content?.map((docent, index) => ({
     id: index,
     profile: docent.profile || "",
     username: docent.username || "",
@@ -29,46 +26,51 @@ const DocentList = () => {
     email: docent.email || "",
   })) || [];
 
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return <Typography color="error">Error al cargar los docentes: {error.message}</Typography>;
+  }
+
   return (
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4" gutterBottom>
         Lista de Docentes
       </Typography>
-
-      {/* Muestra un cargando mientras los datos están siendo obtenidos */}
-      {isLoading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <Paper sx={{ height: 400, width: "100%" }}>
-      <DataGrid
-            rows={rows}
-            columns={columns}
-            autoPageSize={true}
-            rowBufferPx={200}
-            getRowSpacing={(params) => ({
-              top: params.isFirstVisible ? 10 : 5,
-              bottom: params.isLastVisible ? 10 : 5,
-            })}
-            sx={{
-              "& .MuiDataGrid-cell": {
-                fontSize: "1.3rem", // Tamaño de letra para las celdas
-                paddingLeft: "80px", // Espacio a la izquierda
-                paddingRight: "140px",
-                textAlign: "center",
-                
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                fontSize: "1.4rem", // Tamaño de letra para los encabezados de columna
-                paddingLeft: "55px", // Espacio a la izquierda
-                textAlign: "center",
-               
-              },
-            }}
-          />
-        </Paper>
-      )}
+      <Paper sx={{ height: 400, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          autoPageSize
+          pageSize={10}
+          rowBuffer={5}
+          getRowSpacing={(params) => ({
+            top: params.isFirstVisible ? 10 : 5,
+            bottom: params.isLastVisible ? 10 : 5,
+          })}
+          sx={{
+            "& .MuiDataGrid-cell": {
+              fontSize: "1rem",
+              padding: "8px 12px",
+              textAlign: "left", // Alineación por defecto a la izquierda
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              textAlign: "center", // Alineación de los encabezados al centro
+            },
+            "& .MuiDataGrid-footerContainer": {
+              textAlign: "center",
+            },
+          }}
+        />
+      </Paper>
     </Box>
   );
 };
