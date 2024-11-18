@@ -24,6 +24,7 @@ export const Docent = () => {
           <FormCreateDocent registerCreate={register} errorsCreate={errors} />
         </ModalComponent>
       </div>
+      <></>
       <BoardDocent />
     </>
   );
