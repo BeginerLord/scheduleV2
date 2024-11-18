@@ -48,8 +48,6 @@ const DocentList = () => {
           rows={rows}
           columns={columns}
           autoPageSize
-          pageSize={10}
-          rowBuffer={5}
           getRowSpacing={(params) => ({
             top: params.isFirstVisible ? 10 : 5,
             bottom: params.isLastVisible ? 10 : 5,
