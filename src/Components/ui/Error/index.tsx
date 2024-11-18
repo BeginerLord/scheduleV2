@@ -1,4 +1,4 @@
-import style from "./error.module.css"
+import styles from "./error.module.css"
 
 const Error = ({children}:{children:React.ReactNode}) => {
     return (

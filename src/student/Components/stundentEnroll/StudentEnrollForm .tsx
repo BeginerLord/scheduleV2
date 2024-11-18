@@ -1,18 +1,27 @@
- import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCreateStudentEnroll } from "../../hooks"; // Asegúrate de que la ruta sea correcta
 import styles from "./StudentEnrollForm.module.css";
+import { useNavigate } from "react-router-dom";
+
 interface EnrollData {
   dni: string;
-  idCurso: number; // Asegúrate de que este tipo sea siempre número
+  idCurso: number;
 }
 
 const StudentEnrollForm = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    // Redirigir al listado de cursos
+    navigate("/docent");
+  };
+
   const [formData, setFormData] = useState<EnrollData>({
     dni: "",
-    idCurso: 0, // Inicializa con un valor numérico
+    idCurso: 0,
   });
 
-  const { createStudentMutation, isPending, error } = useCreateStudentEnroll(); // Asumiendo que tu hook tiene un `error` en caso de fallo
+  const { createStudentMutation, isPending, error } = useCreateStudentEnroll();
 
   const [formErrors, setFormErrors] = useState<{ dni?: string; idCurso?: string }>({
     dni: "",
@@ -29,7 +38,7 @@ const StudentEnrollForm = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const { dni, idCurso } = formData;
@@ -55,47 +64,81 @@ const StudentEnrollForm = () => {
     }
 
     // Llamada a la mutación para crear la inscripción
-    createStudentMutation({ dni, idCurso });
+    await createStudentMutation({ dni, idCurso });
+
+    // Limpiar los campos del formulario después de un envío exitoso
+    setFormData({
+      dni: "",
+      idCurso: 0,
+    });
   };
 
+  // Función para limpiar los campos manualmente
+  const handleClear = () => {
+    setFormData({
+      dni: "",
+      idCurso: 0,
+    });
+    setFormErrors({
+      dni: "",
+      idCurso: "",
+    });
+  };
+
+  useEffect(() => {
+    if (isPending) {
+      return; // No mostrar nada mientras se está cargando
+    }
+
+    // Si ocurrió un error, mostrar la alerta de error
+    if (error) {
+      console.error("Error al inscribir al estudiante", error);
+    }
+  }, [isPending, error]);
+
   return (
-    <div className={styles.containerh}>
-   
-      <form  className={styles.form}onSubmit={handleSubmit}>
-      <h2>Inscripción de Estudiante de curso</h2>
-        <div className={styles.inp}>
-          <label htmlFor="dni">DNI del estudiante:</label>
-          <input
-            type="text"
-            id="dni"
-            name="dni"
-            value={formData.dni}
-            onChange={handleChange}
-            required
-          />
-          {formErrors.dni && <p style={{ color: "red" }}>{formErrors.dni}</p>}
-        </div>
-
-        <div className={styles.inp}>
-          <label htmlFor="idCurso">ID del Curso:</label>
-          <input
-            type="number"
-            id="idCurso"
-            name="idCurso"
-            min={1}
-            
-            value={formData.idCurso}
-            onChange={handleChange}
-            required
-          />
-          {formErrors.idCurso && <p style={{ color: "red" }}>{formErrors.idCurso}</p>}
-        </div>
-
-        <button type="submit" disabled={isPending}>
-          {isPending ? "Cargando..." : "Inscribir Estudiante"}
-        </button>
-        {error && <p style={{ color: "red" }}>{error}</p>} {/* Mostrar el error en caso de fallo */}
-      </form>
+    <div className="">
+      <h1>Cursos</h1>
+      <div className={styles.btn}>
+        <button onClick={handleNavigate}>Ver listado de Cursos</button>
+      </div>
+      <div className={styles.containerh}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <h2>Inscripción de Estudiante de curso</h2>
+          <div className={styles.inp}>
+            <label htmlFor="dni">DNI del estudiante:</label>
+            <input
+              type="text"
+              id="dni"
+              name="dni"
+              value={formData.dni}
+              onChange={handleChange}
+              required
+            />
+            {formErrors.dni && <p style={{ color: "red" }}>{formErrors.dni}</p>}
+          </div>
+          <div className={styles.inp}>
+            <label htmlFor="idCurso">ID del Curso:</label>
+            <input
+              type="number"
+              id="idCurso"
+              name="idCurso"
+              min={1}
+              value={formData.idCurso}
+              onChange={handleChange}
+              required
+            />
+            {formErrors.idCurso && (
+              <p style={{ color: "red" }}>{formErrors.idCurso}</p>
+            )}
+          </div>
+          <button type="submit" disabled={isPending}>
+            {isPending ? "Cargando..." : "Inscribir Estudiante"}
+          </button>
+          {/* Botón para limpiar los campos */}
+        
+        </form>
+      </div>
     </div>
   );
 };
