@@ -5,6 +5,7 @@ import Student from "./student/page";
 import ScheduleStudent from "./Schedule/Page/scheduleStudent";
 import Schedule from "./Schedule/Page";
 import StudentEnrollForm from "./student/Components/stundentEnroll/StudentEnrollForm ";
+import Course from "./Course/Page";
 
 
 
@@ -19,7 +20,9 @@ function App() {
     <Route path="/horario-estudiante" element={<ScheduleStudent/>} />
     <Route path="/schedule" element={<Schedule/>} />
     <Route path="/matricular" element={<StudentEnrollForm/>} />
+    <Route path="/course" element={<Course/>} />
 
+ 
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>

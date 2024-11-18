@@ -1,5 +1,6 @@
 import ModalComponent from "../../Components/ui/Modal";
 import useCustomerForm from "../../hooksCustomForms/useCustomerForm";
+import CourseList from "../Components/boardCourse";
 import FormCreateCourse from "../Components/FormRegister";
 import { useSaveCourse } from "../hooks";
 import { CourseEnrollmentDto } from "../model";
@@ -20,7 +21,8 @@ export const Course = () => {
   return (
     <>
     
-
+     
+    <div className={style.container }>
       <div className={style.container_modal_component}>
       <ModalComponent title={"Crear Cursos"} onClick={handleSubmit}>
           <FormCreateCourse
@@ -28,7 +30,8 @@ export const Course = () => {
             errorsCreate={errors}
           />
         </ModalComponent>
-   
+        </div>
+        <CourseList/>
 
       </div>
     </>

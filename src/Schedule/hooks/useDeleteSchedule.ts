@@ -4,13 +4,13 @@ import { deleteSchedule } from "../service/schedule";
 export const useDeleteSchedule = () => {
     const queryClient = useQueryClient();
   
-    const { mutate: createSchedule, isPending } = useMutation({
+    const { mutate: deleteDchedule, isPending } = useMutation({
       mutationFn: deleteSchedule,
   
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["schedules"] });
+        queryClient.invalidateQueries({ queryKey: ["scheduleAll"] });
       },
     });
   
-    return { createSchedule, isPending };
+    return { deleteDchedule, isPending };
   };

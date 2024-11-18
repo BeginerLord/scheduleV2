@@ -1,6 +1,7 @@
 import ModalComponent from "../../Components/ui/Modal";
 import useCustomerForm from "../../hooksCustomForms/useCustomerForm";
-import FormCreateSchedule from "../Components/formsRegister";
+import ScheduleList from "../Components/BoardSchedulle";
+ import FormCreateSchedule from "../Components/formsRegister";
 import { useCreateSchedule } from "../hooks";
 import { ScheduleDto } from "../model/schedule";
 import style from "./schedule.module.css"
@@ -30,9 +31,10 @@ export const Schedule = () => {
             errorsCreate={errors}
           />
         </ModalComponent>
-   
+ 
 
       </div>
+      <ScheduleList/>
     </>
   );
 }

@@ -8,3 +8,13 @@
   color: #fff;
   cursor: pointer;
 }
+
+.container_table_priorities {
+  display: flex;
+  justify-content: center;
+height: 63vh;  
+align-items: center;
+
+
+}
+
