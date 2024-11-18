@@ -1,5 +1,3 @@
-import { PathString } from "react-hook-form";
-
 export interface ScheduleStudent{
     id: number;
     courseName: string;

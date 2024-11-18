@@ -7,7 +7,7 @@ import Schedule from "./Schedule/Page";
 import StudentEnrollForm from "./student/Components/stundentEnroll/StudentEnrollForm ";
 import Home from "./Home";
 import Course from "./Course/Page";
-
+import ScheduleDocent from "./Schedule/Page/ScheduleDocent";
 
 function App() {
   return (
@@ -19,9 +19,10 @@ function App() {
         <Route path="/docent" element={<Docent />} />
         <Route path="/student" element={<Student />} />
         <Route path="/horario-estudiante" element={<ScheduleStudent />} />
+        <Route path="/horario-docente" element={<ScheduleDocent />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/matricular" element={<StudentEnrollForm />} />
-    <Route path="/course" element={<Course/>} />
+        <Route path="/course" element={<Course />} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>

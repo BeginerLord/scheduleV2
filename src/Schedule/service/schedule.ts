@@ -1,6 +1,7 @@
 import { scheduleApi } from "../../api";
 import { PaginatedResponse } from "../../model/PaginatedResponse";
 import { Schedule, ScheduleDto } from "../model/schedule";
+import { ScheduleDocent } from "../model/ScheduleDocent";
 import { ScheduleStudent } from "../model/ScheduleStudent";
 
 export const GetScheduleStudent = async () => {
@@ -36,7 +37,7 @@ export const GetScheduleById = async (id: number) => {
 export const GetScheduleDocent = async () => {
   const { data } = await scheduleApi.get("/professor/schedule");
 
-  return data[0] as ScheduleStudent;
+  return data[0] as ScheduleDocent;
 };
 
 export const GetAllSchedule = async (
