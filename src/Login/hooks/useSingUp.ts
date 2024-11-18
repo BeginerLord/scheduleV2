@@ -14,8 +14,8 @@ export const useSingup = () => {
           ? "/home"
           : authorities === "ROLE_STUDENT"
           ? "/horario-estudiante"
-          : authorities === "AGENT"
-          ? "/agente"
+          : authorities === "ROLE_TEACHER"
+          ? "/horario-docente"
           : "/";
 
       navigate(path);
