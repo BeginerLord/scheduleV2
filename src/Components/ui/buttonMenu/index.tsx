@@ -6,7 +6,7 @@ import { Modal } from "@mui/material";
 import AlertIcon from "./icons/alertInactive";
 
 interface Props {
-  onDeactivate: () => void|undefined;
+  onDeactivate: () => Promise<void> | void;
   onEdit: () => void;
   isPendingDeactivate?: boolean;
   isPendingEdit?: boolean;

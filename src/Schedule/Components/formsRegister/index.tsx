@@ -13,7 +13,7 @@ const FormCreateSchedule = ({ registerCreate, errorsCreate }: propsForms) => {
       <InputComponent
         id="startTime"
         label="fecha de inicio"
-        type="date"
+        type="datetime-local"
         {...registerCreate("startTime", {
           required: "campo obligatorio",
         })}
@@ -24,8 +24,8 @@ const FormCreateSchedule = ({ registerCreate, errorsCreate }: propsForms) => {
       <InputComponent
         id="endTime"
         label="fecha de finalizacion"
-        type="date"
-        {...registerCreate("startTime", {
+        type="datetime-local"
+        {...registerCreate("endTime", {
           required: "campo obligatorio",
         })}
       />{" "}
