@@ -38,6 +38,6 @@ export const UpdateStudentByDni = async (dni: string, student: Student) => {
 };
 
 export const SaveStudentEnroll = async (enroll: EnrollDto) => {
-  const { data } = await scheduleApi.post("/student>/enroll", enroll);
+  const { data } = await scheduleApi.post("/student/enroll", enroll);
   return data as Enroll;
 };
