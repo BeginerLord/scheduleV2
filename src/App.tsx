@@ -4,6 +4,8 @@ import Docent from "./docent/page";
 import Student from "./student/page";
 import DocentList from "./docent/Components/boardDocent";
 import ScheduleStudent from "./Schedule/Page/scheduleStudent";
+import Schedule from "./Schedule/Page";
+import StudentEnrollForm from "./student/Components/stundentEnroll/StudentEnrollForm ";
 
 
 function App() {
@@ -14,6 +16,9 @@ function App() {
         <Route path="/docent" element={<Docent />} />
         <Route path="/student" element={<Student />} />
     <Route path="/horario-estudiante" element={<ScheduleStudent/>} />
+    <Route path="/schedule" element={<Schedule/>} />
+    <Route path="/matricular" element={<StudentEnrollForm/>} />
+
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
