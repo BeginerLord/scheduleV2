@@ -5,7 +5,7 @@ import { SaveStudentEnroll } from "../services";
 export const useCreateStudentEnroll = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: createStudentMutation, isPending } = useMutation({
+  const { mutate: createStudentMutation, isPending ,error} = useMutation({
     mutationFn: SaveStudentEnroll,
 
     onSuccess: () => {
@@ -13,5 +13,5 @@ export const useCreateStudentEnroll = () => {
     },
   });
 
-  return { createStudentMutation, isPending };
+  return { createStudentMutation, isPending ,error};
 };
