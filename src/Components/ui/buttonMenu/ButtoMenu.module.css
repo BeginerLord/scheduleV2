@@ -1,0 +1,181 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea los elementos al inicio */
+  }
+  
+  .menuButton {
+    background: none;
+    border: none;
+    font-size: 2.7rem;
+    cursor: pointer; /* Cambia el cursor para indicar que es clicable */
+  }
+  
+  .menu {
+    position: fixed;
+    background-color: #ffff;
+    border: none;
+    border-radius: 0.47rem;
+    display: flex;
+    flex-direction: column; /* Apila los botones verticalmente */
+    align-items: stretch; /* Hace que los botones ocupen todo el ancho disponible */
+    width: 14rem;
+    right: 7.5rem; /* Cambia la posición hacia la derecha */
+    z-index: 9; /* Asegura que esté por encima de otros elementos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0; /* Añade padding para separar los botones del borde */
+  }
+  
+  .menu button {
+    color: black;
+    background-color: #ffff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem; /* Ajusta el padding para mejor espaciado */
+    margin: 0.25rem 1rem; /* Añade margen vertical y lateral */
+    cursor: pointer; /* Cambia el cursor para indicar que es clicable */
+    transition: background-color 0.3s; /* Añade una transición suave al hacer hover */
+  }
+  
+  .menu button:hover {
+    background-color: #cccccc;
+  }
+  
+  .menu span {
+    margin-left: 7px;
+  }
+  
+  .modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0.99rem;
+    width: 33rem;
+    height: 39rem;
+    background: #ffff;
+    padding: 2rem;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para dar efecto flotante */
+  }
+  
+  .image {
+    display: flex;
+    background-color: #fee2e2;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    justify-content: center;
+    border-radius: 9999px;
+    position: absolute;
+    top: 3rem;
+  }
+  
+  .image svg {
+    color: #dc2626;
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .content {
+    top: 9rem;
+    position: absolute;
+    text-align: center;
+    
+  }
+  
+  .title {
+    color: #111827;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  
+  .message {
+    color: gray;
+    font-size: 1.59rem;
+    line-height: 2.4rem;
+    text-align: center; /* Justifica el texto */
+  
+    padding: 0.7rem; /* Añade padding alrededor del texto */
+  }
+  
+  .actions {
+    margin-top: 23rem;
+    font-weight: 500;
+  }
+  
+  .actions button {
+    margin-top: 1rem;
+    font-size: 1.65rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.92rem 0;
+    height: 4.70rem;
+    width: 25rem;
+    transition: background-color 0.3s;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .desactivate {
+    background-color: #dc2626;
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    justify-content: center;
+    border-radius: 0.375rem;
+    border-color: transparent;
+  }
+  
+  .cancel {
+    background-color: #ffffff;
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    justify-content: center;
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db;
+  }
+  
+  .desactivate:hover {
+    background-color: #b8001f;
+  }
+  
+  .cancel:hover {
+    background-color: #cccccc;
+  }
+  
+  .container_modal_edit{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+  }
+  
+  
+  .confir_edit , .cancel_edit{
+  
+    height: 4rem;
+    width: 25rem;
+    margin-left: 2rem;
+    border: none;
+    border-radius: 0.50rem;
+    font-size: 1.4rem;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .confir_edit{
+    background-color: #0053b2;
+  
+  }
+  .cancel_edit{
+    background-color: #a6a6a6;
+  }
+  
+  .container_modal_edit{
+    position: relative;
+    top: 55rem;
+  }
