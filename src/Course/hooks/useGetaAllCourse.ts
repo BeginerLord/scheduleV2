@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { PaginatedResponse } from "../../model/PaginatedResponse";
-import { CourseEnrollmentDto } from "../model";
 import { GetAllCourses } from "../service";
+import { CoursetDto } from "../model/coursedos";
 
 export const useGetAllCourse = (
     page = 0,
@@ -9,7 +9,7 @@ export const useGetAllCourse = (
     sortBy = "name",
     direction = "asc"
   ) => {
-    const { isLoading, data: course } = useQuery<PaginatedResponse<CourseEnrollmentDto>>({
+    const { isLoading, data: course } = useQuery<PaginatedResponse<CoursetDto>>({
       queryKey: ["course", page, size, sortBy, direction],
       queryFn: () => GetAllCourses(page, size, sortBy, direction),
       staleTime: 5000, // keep previous data for 5 seconds
