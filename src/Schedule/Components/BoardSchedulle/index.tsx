@@ -1,15 +1,25 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box, CircularProgress, Paper, Typography } from "@mui/material";
-import { useDeleteSchedule, useGetAllSchedule, useUpdateSchedule } from "../../hooks";
+import {
+  useDeleteSchedule,
+  useGetAllSchedule,
+  useUpdateSchedule,
+} from "../../hooks";
 import MenuButtonComponent from "../../../Components/ui/buttonMenu";
 import { UpdateScheduleDto } from "../../model/schedule";
 import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
 import FormUpdateSchedule from "../../../student/Components/formsUpdate";
 
 const ScheduleList = () => {
-  const { isLoading, scheduleAll: schedules } = useGetAllSchedule(0, 10, "startTime", "asc");
+  const { isLoading, scheduleAll: schedules } = useGetAllSchedule(
+    0,
+    10,
+    "startTime",
+    "asc"
+  );
   const { deleteDchedule, isPending } = useDeleteSchedule();
-  const { isPending: isPendingUpdate, updateScheduleMutation } = useUpdateSchedule();
+  const { isPending: isPendingUpdate, updateScheduleMutation } =
+    useUpdateSchedule();
 
   // Función para actualizar horario
   const updateScheduleSuccess = async (data: UpdateScheduleDto) => {
@@ -47,8 +57,18 @@ const ScheduleList = () => {
   // Definir columnas con la columna de acciones incluida
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 150, align: "center" },
-    { field: "startTime", headerName: "Fecha de inicio", width: 150, align: "center" },
-    { field: "endTime", headerName: "Fecha de finalización", width: 150, align: "center" },
+    {
+      field: "startTime",
+      headerName: "Fecha de inicio",
+      width: 150,
+      align: "center",
+    },
+    {
+      field: "endTime",
+      headerName: "Fecha de finalización",
+      width: 150,
+      align: "center",
+    },
     { field: "room", headerName: "Salón", width: 200, align: "left" },
     { field: "day", headerName: "Día", width: 150, align: "center" },
     {
@@ -72,11 +92,12 @@ const ScheduleList = () => {
             isPendingDeactivate={isPending}
             title={`¿Eliminar horario con ID ${params.row.id}?`}
             label={`Se eliminará permanentemente el horario con ID ${params.row.id}.`}
-            >
-              <FormUpdateSchedule
+          >
+            <FormUpdateSchedule
               errorsUpdate={errorsUpdate}
-              registerUpdate={registerUpdate}/>
-            </MenuButtonComponent>
+              registerUpdate={registerUpdate}
+            />
+          </MenuButtonComponent>
         </Box>
       ),
     },
@@ -95,7 +116,14 @@ const ScheduleList = () => {
   // Mostrar un indicador de carga si los datos están cargando
   if (isLoading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <CircularProgress />
       </Box>
     );

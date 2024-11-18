@@ -12,6 +12,7 @@ const Student =()=>{
       await createStudentMutation({
         ...data,
       });
+      reset();
     };
   
     const { register, handleSubmit, errors, reset } =
@@ -29,10 +30,11 @@ const Student =()=>{
             />
           </ModalComponent>
      
-  <BoardStudent/>
         </div>
+
         </div>
-    
+        <BoardStudent/>
+
       </>
     );
   }

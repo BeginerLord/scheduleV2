@@ -15,6 +15,8 @@ export const Schedule = () => {
     await crear({
       ...data,
     });
+    reset();
+
   };
 
   const { register, handleSubmit, errors, reset } =
@@ -29,6 +31,7 @@ export const Schedule = () => {
           <FormCreateSchedule
             registerCreate={register}
             errorsCreate={errors}
+            resetForm={reset}
           />
         </ModalComponent>
  

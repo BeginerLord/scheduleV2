@@ -1,34 +1,51 @@
 import { UseFormRegister } from "react-hook-form";
-import {  UpdateDocentDto } from "../../model/docent";
-import InputComponent from "../../../Components/ui/Input";
+ import InputComponent from "../../../Components/ui/Input";
 import Error from "../../../Components/ui/Error";
 import style from "./update.module.css";
+import { UpdateStudentDto } from "../../models/Student ";
+
 interface propsForms {
-  registerUpdate: UseFormRegister<UpdateDocentDto>;
+  registerUpdate: UseFormRegister<UpdateStudentDto>;
   errorsUpdate: Record<string, { message?: string }>;
 }
 
-const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
+const FormUpdateStudents = ({ registerUpdate, errorsUpdate }: propsForms) => {
   return (
     <>
       <div className={style.modal_edit}>
-        <h1>Actualizar Docente</h1>
+        <h1>Actualizar Estudiante</h1>
         <form>
           <div className={style.container_input_edit}>
+            {/* Campo descripción */}
             <InputComponent
-              id="profile"
-              label="profile"
+              id="description"
+              label="Descripción"
               type="text"
-              {...registerUpdate("profile", {
+              {...registerUpdate("description", {
                 required: "campo obligatorio",
               })}
-            />{" "}
-            {errorsUpdate.profile?.message && (
-              <Error>{errorsUpdate.profile.message}</Error>
+            />
+            {errorsUpdate.description?.message && (
+              <Error>{errorsUpdate.description.message}</Error>
             )}
+
+            {/* Campo carrera */}
+            <InputComponent
+              id="carrer"
+              label="Carrera"
+              type="text"
+              {...registerUpdate("carrer", {
+                required: "campo obligatorio",
+              })}
+            />
+            {errorsUpdate.carrer?.message && (
+              <Error>{errorsUpdate.carrer.message}</Error>
+            )}
+
+            {/* Campo nombre de usuario */}
             <InputComponent
               id="username"
-              label="username"
+              label="Nombre de usuario"
               type="text"
               {...registerUpdate("username", {
                 required: "campo obligatorio",
@@ -37,9 +54,11 @@ const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
             {errorsUpdate.username?.message && (
               <Error>{errorsUpdate.username.message}</Error>
             )}
+
+            {/* Campo nombre completo */}
             <InputComponent
               id="fullName"
-              label="nombre completo"
+              label="Nombre completo"
               type="text"
               {...registerUpdate("fullName", {
                 required: "campo obligatorio",
@@ -48,10 +67,12 @@ const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
             {errorsUpdate.fullName?.message && (
               <Error>{errorsUpdate.fullName.message}</Error>
             )}
+
+            {/* Campo documento de identificación */}
             <InputComponent
               id="dni"
-              label="documento de identificacion"
-              type="number"
+              label="Documento de identificación"
+              type="text" // Usamos "text" por si el DNI tiene letras o símbolos
               {...registerUpdate("dni", {
                 required: "campo obligatorio",
               })}
@@ -59,10 +80,12 @@ const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
             {errorsUpdate.dni?.message && (
               <Error>{errorsUpdate.dni.message}</Error>
             )}
+
+            {/* Campo número de teléfono */}
             <InputComponent
               id="phoneNumber"
-              label="phoneNumber"
-              type="number"
+              label="Número de teléfono"
+              type="text" // Usamos "text" para manejar posibles formatos de teléfono
               {...registerUpdate("phoneNumber", {
                 required: "campo obligatorio",
               })}
@@ -70,9 +93,11 @@ const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
             {errorsUpdate.phoneNumber?.message && (
               <Error>{errorsUpdate.phoneNumber.message}</Error>
             )}
+
+            {/* Campo dirección */}
             <InputComponent
               id="address"
-              label="address"
+              label="Dirección"
               type="text"
               {...registerUpdate("address", {
                 required: "campo obligatorio",
@@ -81,10 +106,12 @@ const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
             {errorsUpdate.address?.message && (
               <Error>{errorsUpdate.address.message}</Error>
             )}
+
+            {/* Campo correo electrónico */}
             <InputComponent
               id="email"
-              label="email"
-              type="text"
+              label="Correo electrónico"
+              type="email" // Usamos "email" para validación automática de correos
               {...registerUpdate("email", {
                 required: "campo obligatorio",
               })}
@@ -92,10 +119,12 @@ const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
             {errorsUpdate.email?.message && (
               <Error>{errorsUpdate.email.message}</Error>
             )}
+
+            {/* Campo contraseña */}
             <InputComponent
               id="password"
-              label="password"
-              type="text"
+              label="Contraseña"
+              type="password" // Campo de contraseña
               {...registerUpdate("password", {
                 required: "campo obligatorio",
               })}
@@ -110,4 +139,4 @@ const FormUpdateDocent = ({ registerUpdate, errorsUpdate }: propsForms) => {
   );
 };
 
-export default FormUpdateDocent;
+export default FormUpdateStudents;

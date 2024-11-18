@@ -5,7 +5,7 @@ import style from "./boardStudent.module.css";
 import { UpdateStudentDto } from "../../models/Student ";
 import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
 import MenuButtonComponent from "../../../Components/ui/buttonMenu";
-import FormUpdateStudent from "../formsUpdate";
+ import FormUpdateStudents from "../formUpdateStudent";
 
 const BoardStudent = () => {
   const { student, isLoading } = useGetAllStudent(0, 10, "userEntity.username", "asc");
@@ -75,7 +75,7 @@ const BoardStudent = () => {
               title={`¿Desactivar estudiante ${params.row.fullName}?`}
               label={`Se desactivará permanentemente el estudiante con DNI ${params.row.dni}.`}
             >
-              <FormUpdateStudent
+              <FormUpdateStudents
               errorsUpdate={errorsUpdate}
               registerUpdate={registerUpdate}/>
             </MenuButtonComponent>
