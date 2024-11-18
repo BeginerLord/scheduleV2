@@ -6,7 +6,7 @@ import { GetAllSchedule } from "../service/schedule";
 export const useGetAllSchedule = (
     page = 0,
     size = 10,
-    sortBy = "name",
+    sortBy = "startTime",
     direction = "asc"
   ) => {
     const { isLoading, data: scheduleAll } = useQuery<PaginatedResponse<ScheduleDto>>({

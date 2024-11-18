@@ -6,6 +6,8 @@ import ScheduleStudent from "./Schedule/Page/scheduleStudent";
 import Schedule from "./Schedule/Page";
 import StudentEnrollForm from "./student/Components/stundentEnroll/StudentEnrollForm ";
 import Home from "./Home";
+import Course from "./Course/Page";
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Route path="/horario-estudiante" element={<ScheduleStudent />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/matricular" element={<StudentEnrollForm />} />
+    <Route path="/course" element={<Course/>} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
