@@ -6,8 +6,8 @@ export const useUpdateDocent = () => {
   const queryClient = useQueryClient();
 
   const { mutate: updateDocentMutation, isPending } = useMutation({
-    mutationFn: ({ dni, schedule }: { dni: number; schedule: DocentDto }) =>
-      UpdateDocentByDni(dni, schedule),
+    mutationFn: ({ dni, data }: { dni: number; schedule: DocentDto }) =>
+      UpdateDocentByDni(dni, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["docent"] }); // Actualiza el cache
     },

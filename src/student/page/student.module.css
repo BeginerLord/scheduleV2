@@ -1,0 +1,18 @@
+.container
+{
+    margin-top: 5rem;
+}
+ 
+.container_modal_component button {
+    background-color: #0053b2;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 0.8rem;
+    width: 14rem;
+    height: 3rem;
+    border: none;
+    font-size: small;
+     margin-left: 12rem;
+  }
+
+ 
