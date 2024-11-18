@@ -1,10 +1,43 @@
 import { Box, Paper, CircularProgress, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
- import { useGetAllDocent } from "../../hooks";
+ import { useDeleteDocent, useGetAllDocent, useUpdateDocent } from "../../hooks";
+import { UpdateDocentDto } from "../../model/docent";
+import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
+import MenuButtonComponent from "../../../Components/ui/buttonMenu";
+import FormUpdateDocent from "../formUpdate";
 
 const BoardDocent = () => {
   const { docent, isLoading, error } = useGetAllDocent(0, 10, "userEntity.username", "asc");
+  const{deleteDocentMutate:deleteDocent, isPending:isPendingDelete}=useDeleteDocent();
+  const{updateDocentMutation, isPending}=useUpdateDocent();
+
+  const handleDeactivate = async (dni: string) => {
+    await deleteDocent(dni);
+  };
  
+  const updateDocentSucces = async (data: UpdateDocentDto) => {
+  
+    await updateDocentMutation({
+      dni: data.dni || "",
+      docent: {
+        dni: data.dni || "",
+        profile: data.profile || "",
+        username: data.username || "",
+        fullName: data.fullName || "",
+        phoneNumber: data.phoneNumber || "",
+        address: data.address || "",
+        email: data.email || "",
+        password: data.password || "",
+      },
+    });
+  };
+
+  const {
+    register: registerUpdate,
+    handleSubmit: handleSubmitUpdate,
+    errors: errorsUpdate,
+    reset,
+  } = useCustomerForm<UpdateDocentDto>(updateDocentSucces);
 
 
 
@@ -20,23 +53,39 @@ const BoardDocent = () => {
     { field: "email", headerName: "Correo", width: 200, align: "left" },
     {
       field: "actions",
-      headerName: "",
+      headerName: "Acciones",
       width: 120,
+
       renderCell: (params) => (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          
-        </Box>
+        <>
+          <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  width: "100%",
+                }}
+                 
+          >
+            <MenuButtonComponent
+              onEdit={() => handleSubmitUpdate(params.row)}
+              onDeactivate={() => handleDeactivate(params.row.dni)}
+              isPendingDeactivate={isPendingDelete}
+              isPendingEdit={isPending}
+              title={`¿Desactivar docente ${params.row.fullName}?`}
+              label={`Se desactivará permanentemente el docente con DNI ${params.row.dni}.`}
+            >
+              <FormUpdateDocent
+              errorsUpdate={errorsUpdate}
+              registerUpdate={registerUpdate}/>
+            </MenuButtonComponent>
+          </Box>
+        </>
       ),
     },
   ];
+
 
   // Mapeo de los datos obtenidos de la API para que tengan la estructura adecuada
   const rows = docent?.content?.map((docent) => ({

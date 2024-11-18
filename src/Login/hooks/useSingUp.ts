@@ -11,9 +11,9 @@ export const useSingup = () => {
       const { authorities } = data;
       const path =
       authorities === "ROLE_ADMIN"
-          ? "/creardocente"
-          : authorities === "USER"
-          ? "/usuario"
+          ? "/home"
+          : authorities === "ROLE_STUDENT"
+          ? "/horario-estudiante"
           : authorities === "AGENT"
           ? "/agente"
           : "/";
