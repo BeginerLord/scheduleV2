@@ -1,10 +1,44 @@
 import { Box, Paper, CircularProgress, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useGetAllStudent } from "../../hooks"; // Hook personalizado para obtener estudiantes
+import { useDeleteStudent, useGetAllStudent, useUpdateStudent } from "../../hooks"; // Hook personalizado para obtener estudiantes
 import style from "./boardStudent.module.css";
+import { UpdateStudentDto } from "../../models/Student ";
+import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
+import MenuButtonComponent from "../../../Components/ui/buttonMenu";
+ import FormUpdateStudents from "../formUpdateStudent";
 
 const BoardStudent = () => {
   const { student, isLoading } = useGetAllStudent(0, 10, "userEntity.username", "asc");
+  const{deleteStudentMutation:deleteStudent, isPending:isPendingDelete}=useDeleteStudent();
+  const{updateStudentMutation, isPending}=useUpdateStudent();
+
+  const handleDeactivate = async (dni: string) => {
+    await deleteStudent(dni);
+  };
+
+  const updateStudentSucces = async (data: UpdateStudentDto) => {
+  
+    await updateStudentMutation({
+      dni: data.dni || "",
+      student: {
+        description: data.description,
+        carrer: data.carrer,
+        username: data.username,
+        fullName: data.fullName,
+        phoneNumber: data.phoneNumber,
+        address: data.address,
+        email: data.email,
+        password: data.password,
+      },
+    });
+  };
+
+  const {
+    register: registerUpdate,
+    handleSubmit: handleSubmitUpdate,
+    errors: errorsUpdate,
+    reset,
+  } = useCustomerForm<UpdateStudentDto>(updateStudentSucces);
 
   // Definir las columnas del DataGrid según el esquema
   const columns: GridColDef[] = [
@@ -18,21 +52,35 @@ const BoardStudent = () => {
     { field: "email", headerName: "Correo", width: 200, headerAlign: "left", align: "left" },
     {
       field: "actions",
-      headerName: "",
+      headerName: "Acciones",
       width: 120,
-      headerAlign: "center",
+
       renderCell: (params) => (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          {/* Puedes agregar botones de acción aquí, como editar o eliminar */}
-        </Box>
+        <>
+          <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  width: "100%",
+                }}
+                 
+          >
+            <MenuButtonComponent
+              onEdit={() => handleSubmitUpdate(params.row)}
+              onDeactivate={() => handleDeactivate(params.row.dni)}
+              isPendingDeactivate={isPendingDelete}
+              isPendingEdit={isPending}
+              title={`¿Desactivar estudiante ${params.row.fullName}?`}
+              label={`Se desactivará permanentemente el estudiante con DNI ${params.row.dni}.`}
+            >
+              <FormUpdateStudents
+              errorsUpdate={errorsUpdate}
+              registerUpdate={registerUpdate}/>
+            </MenuButtonComponent>
+          </Box>
+        </>
       ),
     },
   ];

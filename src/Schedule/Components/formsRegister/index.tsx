@@ -1,4 +1,4 @@
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormReset } from "react-hook-form";
 import InputComponent from "../../../Components/ui/Input";
 import { ScheduleDto } from "../../model/schedule";
 import Error from "../../../Components/ui/Error";
@@ -6,14 +6,16 @@ import Error from "../../../Components/ui/Error";
 interface propsForms {
   registerCreate: UseFormRegister<ScheduleDto>;
   errorsCreate: Record<string, { message?: string }>;
+  resetForm: UseFormReset<ScheduleDto>; // Agregar esta propiedad
+
 }
-const FormCreateSchedule = ({ registerCreate, errorsCreate }: propsForms) => {
+const FormCreateSchedule = ({ registerCreate, errorsCreate ,resetForm }: propsForms) => {
   return (
     <>
       <InputComponent
         id="startTime"
         label="fecha de inicio"
-        type="date"
+        type="datetime-local"
         {...registerCreate("startTime", {
           required: "campo obligatorio",
         })}
@@ -24,8 +26,8 @@ const FormCreateSchedule = ({ registerCreate, errorsCreate }: propsForms) => {
       <InputComponent
         id="endTime"
         label="fecha de finalizacion"
-        type="date"
-        {...registerCreate("startTime", {
+        type="datetime-local"
+        {...registerCreate("endTime", {
           required: "campo obligatorio",
         })}
       />{" "}

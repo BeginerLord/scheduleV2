@@ -1,0 +1,96 @@
+.btn {
+    margin-top: 4rem;
+    margin-left: 7rem; /* Este margen se mantiene */
+}
+
+.containerh {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb); /* Fondo suave con degradado */
+    padding: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 2rem;
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%;
+    max-width: 400px; /* Ancho máximo */
+}
+
+.inp {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Espaciado entre etiqueta e input */
+}
+
+.inp label {
+    font-size: 1rem;
+    color: #374151; /* Color oscuro para la etiqueta */
+    font-weight: bold;
+}
+
+.inp input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db; /* Borde gris claro */
+    border-radius: 6px; /* Bordes redondeados */
+    font-size: 1rem;
+    background-color: #f9fafb; /* Fondo claro */
+    color: #374151; /* Texto oscuro */
+    transition: all 0.3s ease;
+}
+
+.inp input:focus {
+    border-color: #2563eb; /* Borde azul al hacer focus */
+    outline: none; /* Sin contorno adicional */
+    background-color: #ffffff; /* Fondo blanco */
+}
+
+button {
+    padding: 0.75rem 1rem;
+    background-color: #2563eb; /* Azul */
+    color: #ffffff; /* Blanco */
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:disabled {
+    background-color: #9ca3af; /* Gris claro */
+    cursor: not-allowed;
+}
+
+button:hover:enabled {
+    background-color: #1e3a8a; /* Azul más oscuro */
+    transform: scale(1.02); /* Ligera ampliación */
+}
+
+p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #ef4444; /* Rojo para errores */
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #1f2937; /* Gris oscuro */
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+    margin-top: 2rem;
+ 
+    font-weight: 700;
+}

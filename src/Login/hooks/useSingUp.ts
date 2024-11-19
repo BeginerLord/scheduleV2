@@ -11,11 +11,11 @@ export const useSingup = () => {
       const { authorities } = data;
       const path =
       authorities === "ROLE_ADMIN"
-          ? "/creardocente"
-          : authorities === "USER"
-          ? "/usuario"
-          : authorities === "AGENT"
-          ? "/agente"
+          ? "/home"
+          : authorities === "ROLE_STUDENT"
+          ? "/horario-estudiante"
+          : authorities === "ROLE_TEACHER"
+          ? "/horario-docente"
           : "/";
 
       navigate(path);

@@ -1,6 +1,7 @@
 import { scheduleApi } from "../../api";
 import { PaginatedResponse } from "../../model/PaginatedResponse";
 import { CourseEnrollment, CourseEnrollmentDto } from "../model";
+import { Course, CoursetDto } from "../model/coursedos";
 
 export const SaveCourse = async (courses: CourseEnrollmentDto) => {
     const { data } = await scheduleApi.post("/courses", courses);
@@ -20,7 +21,7 @@ export const SaveCourse = async (courses: CourseEnrollmentDto) => {
   ) => {
     const url = `/courses?page=${page}&size=${size}&sortBy=${sortBy}&direction=${direction}`;
     const { data } = await scheduleApi.get(url);
-    return data as PaginatedResponse<CourseEnrollmentDto>;
+    return data as PaginatedResponse<CoursetDto>;
   };
   
   export const SearcCourseByName = async (name: string) => {
@@ -29,7 +30,7 @@ export const SaveCourse = async (courses: CourseEnrollmentDto) => {
     return data as CourseEnrollmentDto;
   };
   
-  export const UpdateCourseByName = async (name:string, courses:CourseEnrollmentDto) => {
+  export const UpdateCourseByName = async (name:string, courses:CourseEnrollment) => {
       const { data } = await scheduleApi.put(`/courses/${name}`, courses);
       return data as CourseEnrollment;
     };

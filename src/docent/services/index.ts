@@ -35,7 +35,7 @@ export const SearchDocentByDni = async (dni: string) => {
   return data as DocentDto;
 };
 
-export const UpdateDocentByDni = async (dni:number, docent:DocentDto) => {
+export const UpdateDocentByDni = async (dni:string, docent:DocentDto) => {
   const { data } = await scheduleApi.put(`/teacher/${dni}`, docent);
 
   return data as Docent;
