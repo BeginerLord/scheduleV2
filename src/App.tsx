@@ -8,7 +8,6 @@ import StudentEnrollForm from "./student/Components/stundentEnroll/StudentEnroll
 import Home from "./Home";
 import Course from "./Course/Page";
 import ScheduleDocent from "./Schedule/Page/ScheduleDocent";
-import CoursesGestion from "./Course/Page/courses";
 
 function App() {
   return (
@@ -24,8 +23,6 @@ function App() {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/matricular" element={<StudentEnrollForm />} />
         <Route path="/course" element={<Course />} />
-        <Route path="/gestionMatricula" element={<CoursesGestion />} />
-
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>

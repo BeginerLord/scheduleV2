@@ -16,8 +16,12 @@ import { useGetScheduleStudent } from "../../hooks";
 
 const theme = createTheme({
   palette: {
-    primary: { main: "#1976d2" },
-    secondary: { main: "#dc004e" },
+    primary: {
+      main: "#1976d2",
+    },
+    secondary: {
+      main: "#dc004e",
+    },
   },
 });
 
@@ -25,7 +29,7 @@ const ScheduleStudent = () => {
   const { scheduleStudent, isLoading } = useGetScheduleStudent();
   const scheduleData = Array.isArray(scheduleStudent)
     ? scheduleStudent
-    : [scheduleStudent];
+    : [scheduleStudent]; // Convierte el objeto en un arreglo si no lo es
   console.log("scheduleStudent:", scheduleStudent);
 
   const columns: GridColDef[] = [
@@ -38,21 +42,19 @@ const ScheduleStudent = () => {
     { field: "room", headerName: "Salon", width: 150 },
     { field: "day", headerName: "Dia", width: 150 },
   ];
-
   const rows: ScheduleStudentDTO[] =
-    Array.isArray(scheduleData) && scheduleData.length > 0
-      ? scheduleData.map((schedule, index) => ({
-          id: schedule?.id || `temp-id-${index}`,
-          courseName: schedule?.courseName || "N/A",
-          courseHours: schedule?.courseHours || 0,
-          courseLevel: schedule?.courseLevel || "N/A",
-          docentName: schedule?.docentName || "N/A",
-          startTime: schedule?.startTime || "N/A",
-          endTime: schedule?.endTime || "N/A",
-          room: schedule?.room || "N/A",
-          day: schedule?.day || "N/A",
-        }))
-      : [];
+    scheduleData?.map((schedule, index) => ({
+      
+      id: schedule.id || `temp-id-${index}`,
+      courseName: schedule.courseName || "",
+      courseHours: schedule.courseHours || 0,
+      courseLevel: schedule.courseLevel || "",
+      docentName: schedule.docentName || "",
+      startTime: schedule.startTime || "",
+      endTime: schedule.endTime || "",
+      room: schedule.room || "",
+      day: schedule.day || "",
+    })) || [];
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,32 +83,20 @@ const ScheduleStudent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} align="center">
-                  <Typography>Cargando datos...</Typography>
-                </TableCell>
+          {rows.map((row) => (
+              <TableRow
+                key={row.id} // Usa el ID único aquí
+                sx={{
+                  "&:nth-of-type(odd)": { backgroundColor: "action.hover" },
+                }}
+              >
+                {columns.map((column) => (
+                  <TableCell key={`${row.id}-${column.field}`}>
+                    {row[column.field as keyof ScheduleStudentDTO] ?? "N/A"}
+                  </TableCell>
+                ))}
               </TableRow>
-            ) : rows.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} align="center">
-                  <Typography>No hay datos disponibles</Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ "&:nth-of-type(odd)": { backgroundColor: "action.hover" } }}
-                >
-                  {columns.map((column) => (
-                    <TableCell key={`${row.id}-${column.field}`}>
-                      {row[column.field as keyof ScheduleStudentDTO] ?? "N/A"}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            )}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

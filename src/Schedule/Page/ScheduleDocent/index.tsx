@@ -9,13 +9,10 @@ import {
     Typography,
     ThemeProvider,
     createTheme,
-    Button,
-    Box,
   } from "@mui/material";
   import { GridColDef } from "@mui/x-data-grid";
 import { useGetScheduleDocent } from "../../../Course/hooks";
 import { ScheduleDocentDTO } from "../../model/ScheduleDocent";
-import { useNavigate } from "react-router-dom";
 
   
   const theme = createTheme({
@@ -31,7 +28,6 @@ import { useNavigate } from "react-router-dom";
   
   const ScheduleDocent = () => {
     const { isLoading,scheduleDocent } = useGetScheduleDocent();
-    const navigate = useNavigate();
 
     const scheduleData = Array.isArray(scheduleDocent)
     ? scheduleDocent
@@ -64,12 +60,6 @@ import { useNavigate } from "react-router-dom";
     : [];
 
   
-    const handleLogout = () => {
-      // Remover el token (localStorage o sessionStorage)
-      localStorage.removeItem("jwt"); // Si lo usas en sessionStorage, usa sessionStorage.removeItem("token");
-      // Redirigir al login
-      navigate("/login");
-    };
     return (
       <ThemeProvider theme={theme}>
         <TableContainer
@@ -113,22 +103,6 @@ import { useNavigate } from "react-router-dom";
               ))}
             </TableBody>
           </Table>
-
-          <Box
-        sx={{
-          position: "absolute",
-          top: 20,
-          right: 20,
-        }}
-      >
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleLogout}
-        >
-          Salir
-        </Button>
-      </Box>
         </TableContainer>
       </ThemeProvider>
     );
