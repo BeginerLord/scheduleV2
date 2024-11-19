@@ -1,20 +1,20 @@
 import ModalComponent from "../../../Components/ui/Modal";
 import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
 import FormRegisterCourse from "../../Components/formRegisterCourse";
- import { useSaveCourse } from "../../hooks";
-import { Model1Dto } from "../../model/model1";
+import { useSaveCourse } from "../../hooks";
+import { CourseEnrollmentDto } from "../../model";
 import style from "./coursess.module.css";
 
 const CoursesGestion = () => {
   const { isPending, saveCourseMutation } = useSaveCourse();
-  const createCourseSucces = async (data: Model1Dto) => {
+  const createCourseSucces = async (data: CourseEnrollmentDto) => {
     await saveCourseMutation({
       ...data,
     });
   };
 
   const { register, handleSubmit, errors, reset } =
-    useCustomerForm<Model1Dto>(createCourseSucces);
+    useCustomerForm<CourseEnrollmentDto>(createCourseSucces);
 
   return (
     <>

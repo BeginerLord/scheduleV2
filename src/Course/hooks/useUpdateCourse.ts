@@ -2,7 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UpdateCourseByName } from "../service";
 import { CourseEnrollment } from "../model";
 
-export const useUpdateCourse = () => {
+
+
+export const useUpdateCourseHook = () => {
     const queryClient = useQueryClient();
   
     const { mutate: updateCourseMutation, isPending } = useMutation({
@@ -15,4 +17,3 @@ export const useUpdateCourse = () => {
   
     return { updateCourseMutation, isPending };
   };
-  

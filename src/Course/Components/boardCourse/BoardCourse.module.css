@@ -1,6 +1,5 @@
 .container_table_status {
-    display: flex;
-    justify-content: center;
-    width: 130rem;
-  }
-  
+  display: flex;
+  justify-content: center;
+  width: 130rem;
+}

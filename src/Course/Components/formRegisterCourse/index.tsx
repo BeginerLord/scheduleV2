@@ -1,10 +1,10 @@
 import { UseFormRegister } from "react-hook-form";
 import InputComponent from "../../../Components/ui/Input";
 import Error from "../../../Components/ui/Error";
-import { Model1, Model1Dto } from "../../model/model1";
+ import { CourseEnrollmentDto } from "../../model";
 
    interface PropsForms {
-    registerCreate: UseFormRegister<Model1Dto>;
+    registerCreate: UseFormRegister<CourseEnrollmentDto>;
     errorsCreate: Record<string, { message?: string }>;
   }
   const FormRegisterCourse = ({ registerCreate, errorsCreate }: PropsForms) => {
