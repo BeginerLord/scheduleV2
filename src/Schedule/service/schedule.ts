@@ -7,7 +7,7 @@ import { ScheduleStudent } from "../model/ScheduleStudent";
 export const GetScheduleStudent = async () => {
   const { data } = await scheduleApi.get("/schedule/student/schedule");
 
-  return data[0] as ScheduleStudent;
+  return data  as ScheduleStudent;
 };
 
 export const CreateSchedule = async (schedule: ScheduleDto) => {
@@ -35,9 +35,9 @@ export const GetScheduleById = async (id: number) => {
 };
 
 export const GetScheduleDocent = async () => {
-  const { data } = await scheduleApi.get("/professor/schedule");
+  const { data } = await scheduleApi.get("/schedule/professor/schedule");
 
-  return data[0] as ScheduleDocent;
+  return data as ScheduleDocent;
 };
 
 export const GetAllSchedule = async (
