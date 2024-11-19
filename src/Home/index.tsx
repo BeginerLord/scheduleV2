@@ -10,24 +10,36 @@ import {
   CardContent,
   ThemeProvider,
   Box,
+  Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 const sections = [
-  { title: "Docente", icon: "D", path: "/docent" },
-  { title: "Matriculas", icon: "C", path: "/matricular" },
-  { title: "Horario", icon: "H", path: "/schedule" },
-  { title: "Estudiante", icon: "E", path: "/student" },
+  { title: "Gestión de Docente", icon: "D", path: "/docent" },
+  { title: "Aplicar Matriculas", icon: "C", path: "/matricular" },
+  { title: "Gestión de Horario", icon: "H", path: "/schedule" },
+  { title: "Gestión de Estudiante", icon: "E", path: "/student" },
+  { title: "Gestión de Matriculas", icon: "E", path: "/gestionMatricula" },
 ];
 
 const Home = () => {
   const navigate = useNavigate();
+
   const handleCardClick = (path: string) => {
     console.log(`Navigating to ${path}`);
     navigate(path);
   };
+
+  const handleLogout = () => {
+    // Aquí puedes implementar la lógica para cerrar sesión
+    console.log("Cerrando sesión");
+    localStorage.removeItem("jwt");
+
+    navigate("/login"); // Redirige a la página de login
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static">
@@ -68,7 +80,20 @@ const Home = () => {
           ))}
         </Grid>
       </Container>
-     </ThemeProvider>
+
+      {/* Botón de Salir en la esquina superior derecha */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+        }}
+      >
+        <Button variant="contained" color="secondary" onClick={handleLogout}>
+          Salir
+        </Button>
+      </Box>
+    </ThemeProvider>
   );
 };
 
