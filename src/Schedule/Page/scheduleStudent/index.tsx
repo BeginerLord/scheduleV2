@@ -9,10 +9,13 @@ import {
   Typography,
   ThemeProvider,
   createTheme,
+  Box,
+  Button,
 } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { ScheduleStudentDTO } from "../../model/ScheduleStudent";
 import { useGetScheduleStudent } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -27,6 +30,18 @@ const ScheduleStudent = () => {
     ? scheduleStudent
     : [scheduleStudent];
   console.log("scheduleStudent:", scheduleStudent);
+
+
+  const navigate = useNavigate();
+
+
+  const handleLogout = () => {
+    // Remover el token (localStorage o sessionStorage)
+    localStorage.removeItem("jwt"); // Si lo usas en sessionStorage, usa sessionStorage.removeItem("token");
+    // Redirigir al login
+    navigate("/login");
+  };
+  
 
   const columns: GridColDef[] = [
     { field: "courseName", headerName: "Nombre del curso", width: 230 },
@@ -97,7 +112,9 @@ const ScheduleStudent = () => {
               rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  sx={{ "&:nth-of-type(odd)": { backgroundColor: "action.hover" } }}
+                  sx={{
+                    "&:nth-of-type(odd)": { backgroundColor: "action.hover" },
+                  }}
                 >
                   {columns.map((column) => (
                     <TableCell key={`${row.id}-${column.field}`}>
@@ -109,6 +126,17 @@ const ScheduleStudent = () => {
             )}
           </TableBody>
         </Table>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 20,
+            right: 20,
+          }}
+        >
+          <Button variant="contained" color="secondary" onClick={handleLogout}>
+            Salir
+          </Button>
+        </Box>
       </TableContainer>
     </ThemeProvider>
   );

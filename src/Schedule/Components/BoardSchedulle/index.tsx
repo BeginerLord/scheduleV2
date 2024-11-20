@@ -19,8 +19,20 @@ const ScheduleList = () => {
     "startTime",
     "asc"
   );
-  const { deleteDchedule, isPending: isDeletePending, isError: isDeleteError, error: deleteError, isSuccess: isDeleteSuccess } = useDeleteSchedule();
-  const { updateScheduleMutation, isPending: isUpdatePending, isError: isUpdateError, error: updateError, isSuccess: isUpdateSuccess } = useUpdateSchedule();
+  const {
+    deleteDchedule,
+    isPending: isDeletePending,
+    isError: isDeleteError,
+    error: deleteError,
+    isSuccess: isDeleteSuccess,
+  } = useDeleteSchedule();
+  const {
+    updateScheduleMutation,
+    isPending: isUpdatePending,
+    isError: isUpdateError,
+    error: updateError,
+    isSuccess: isUpdateSuccess,
+  } = useUpdateSchedule();
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
@@ -151,16 +163,17 @@ const ScheduleList = () => {
       </Box>
     );
   }
-  
 
   return (
     <Box sx={{ padding: 2 }}>
-       {showErrorAlert && (
-          <Alert severity="error">{getErrorMessage(deleteError || updateError)}</Alert>
-        )}
-        {showSuccessAlert && (
-          <Alert severity="success">Operación realizada exitosamente!</Alert>
-        )}
+      {showErrorAlert && (
+        <Alert severity="error">
+          {getErrorMessage(deleteError || updateError)}
+        </Alert>
+      )}
+      {showSuccessAlert && (
+        <Alert severity="success">Operación realizada exitosamente!</Alert>
+      )}
       <Typography variant="h4" gutterBottom>
         Historial de horarios
       </Typography>

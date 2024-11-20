@@ -5,7 +5,13 @@ export const useDeleteStudent = () => {
   const queryClient = useQueryClient();
 
   // Hook que utiliza useMutation para realizar la mutación de eliminación
-  const { mutate: deleteStudentMutation, isPending } = useMutation({
+  const {
+    mutate: deleteStudentMutation,
+    isPending,
+    isError,
+    isSuccess,
+    error,
+  } = useMutation({
     mutationFn: DeleteStudent,
 
     onSuccess: () => {
@@ -22,5 +28,5 @@ export const useDeleteStudent = () => {
     },
   });
 
-  return { deleteStudentMutation, isPending };
+  return { deleteStudentMutation, isPending, isError, error, isSuccess };
 };

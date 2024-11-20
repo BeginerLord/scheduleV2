@@ -1,23 +1,40 @@
 import { Box, Paper, CircularProgress, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useDeleteStudent, useGetAllStudent, useUpdateStudent } from "../../hooks"; // Hook personalizado para obtener estudiantes
+import {
+  useDeleteStudent,
+  useGetAllStudent,
+  useUpdateStudent,
+} from "../../hooks"; // Hook personalizado para obtener estudiantes
 import style from "./boardStudent.module.css";
 import { UpdateStudentDto } from "../../models/Student ";
 import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
 import MenuButtonComponent from "../../../Components/ui/buttonMenu";
- import FormUpdateStudents from "../formUpdateStudent";
+import FormUpdateStudents from "../formUpdateStudent";
 
 const BoardStudent = () => {
-  const { student, isLoading } = useGetAllStudent(0, 10, "userEntity.username", "asc");
-  const{deleteStudentMutation:deleteStudent, isPending:isPendingDelete}=useDeleteStudent();
-  const{updateStudentMutation, isPending}=useUpdateStudent();
+  const { student, isLoading } = useGetAllStudent(
+    0,
+    10,
+    "userEntity.username",
+    "asc"
+  );
+  const {
+    deleteStudentMutation: deleteStudent,
+    isPending: isPendingDelete,
+    error,
+    isError,
+    isSuccess
+  } = useDeleteStudent();
+  const { updateStudentMutation, isPending } = useUpdateStudent();
 
   const handleDeactivate = async (dni: string) => {
     await deleteStudent(dni);
   };
 
+
+
+
   const updateStudentSucces = async (data: UpdateStudentDto) => {
-  
     await updateStudentMutation({
       dni: data.dni || "",
       student: {
@@ -42,14 +59,62 @@ const BoardStudent = () => {
 
   // Definir las columnas del DataGrid según el esquema
   const columns: GridColDef[] = [
-    { field: "description", headerName: "Descripción", width: 150, headerAlign: "center", align: "center" },
-    { field: "carrer", headerName: "Carrera", width: 150, headerAlign: "center", align: "center" },
-    { field: "username", headerName: "Usuario", width: 150, headerAlign: "center", align: "center" },
-    { field: "fullName", headerName: "Nombre Completo", width: 200, headerAlign: "left", align: "left" },
-    { field: "dni", headerName: "DNI", width: 150, headerAlign: "center", align: "center" },
-    { field: "phoneNumber", headerName: "Teléfono", width: 180, headerAlign: "center", align: "center" },
-    { field: "address", headerName: "Dirección", width: 250, headerAlign: "left", align: "left" },
-    { field: "email", headerName: "Correo", width: 200, headerAlign: "left", align: "left" },
+    {
+      field: "description",
+      headerName: "Descripción",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "carrer",
+      headerName: "Carrera",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "username",
+      headerName: "Usuario",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "fullName",
+      headerName: "Nombre Completo",
+      width: 200,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "dni",
+      headerName: "DNI",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "phoneNumber",
+      headerName: "Teléfono",
+      width: 180,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "address",
+      headerName: "Dirección",
+      width: 250,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "email",
+      headerName: "Correo",
+      width: 200,
+      headerAlign: "left",
+      align: "left",
+    },
     {
       field: "actions",
       headerName: "Acciones",
@@ -58,14 +123,13 @@ const BoardStudent = () => {
       renderCell: (params) => (
         <>
           <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  width: "100%",
-                }}
-                 
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              width: "100%",
+            }}
           >
             <MenuButtonComponent
               onEdit={() => handleSubmitUpdate(params.row)}
@@ -76,8 +140,9 @@ const BoardStudent = () => {
               label={`Se desactivará permanentemente el estudiante con DNI ${params.row.dni}.`}
             >
               <FormUpdateStudents
-              errorsUpdate={errorsUpdate}
-              registerUpdate={registerUpdate}/>
+                errorsUpdate={errorsUpdate}
+                registerUpdate={registerUpdate}
+              />
             </MenuButtonComponent>
           </Box>
         </>
@@ -102,7 +167,14 @@ const BoardStudent = () => {
   // Verificar si está cargando los datos
   if (isLoading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <CircularProgress />
       </Box>
     );
