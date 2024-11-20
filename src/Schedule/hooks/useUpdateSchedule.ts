@@ -5,7 +5,7 @@ import { Schedule } from "../model/schedule";
 export const useUpdateSchedule = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: updateScheduleMutation, isPending } = useMutation({
+  const { mutate: updateScheduleMutation, isPending,isError, error, isSuccess } = useMutation({
     mutationFn: ({ id, schedule }: { id: string; schedule: Schedule }) =>
       UpdateSchedule(id, schedule),
 
@@ -14,5 +14,5 @@ export const useUpdateSchedule = () => {
     },
   });
 
-  return { updateScheduleMutation, isPending };
+  return { updateScheduleMutation, isPending,isError, error, isSuccess };
 };

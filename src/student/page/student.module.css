@@ -1,8 +1,4 @@
-.container
-{
-    margin-top: 5rem;
-}
- 
+
 .container_modal_component button {
     background-color: #0053b2;
     color: #fff;
@@ -12,7 +8,13 @@
     height: 3rem;
     border: none;
     font-size: small;
-     margin-left: 12rem;
+     margin-left: 4rem;
+     margin-top: 2rem;
+     margin-bottom: 7rem;
   }
 
- 
+  .container_table{
+
+    width: 23rem;
+    margin-left: 70rem;
+  }

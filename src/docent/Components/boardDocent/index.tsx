@@ -1,21 +1,43 @@
-import { Box, Paper, CircularProgress, Typography } from "@mui/material";
+import { Box, Paper, CircularProgress, Typography, Alert } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useDeleteDocent, useGetAllDocent, useUpdateDocent } from "../../hooks";
 import { UpdateDocentDto } from "../../model/docent";
 import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
 import MenuButtonComponent from "../../../Components/ui/buttonMenu";
 import FormUpdateDocent from "../formUpdate";
+import { useEffect, useState } from "react";
+import { getErrorMessage } from "../../../utils/errorUtils";
 
 const BoardDocent = () => {
-  const { docent, isLoading, error } = useGetAllDocent(
+  const { docent, isLoading } = useGetAllDocent(
     0,
     10,
     "userEntity.username",
     "asc"
   );
-  const { deleteDocentMutate: deleteDocent, isPending: isPendingDelete } =
-    useDeleteDocent();
-  const { updateDocentMutation, isPending } = useUpdateDocent();
+  const { deleteDocentMutate: deleteDocent, isPending: isDeletePending, isError: isDeleteError, error: deleteError, isSuccess:isDeleteSuccess } = useDeleteDocent();
+  const { updateDocentMutation, isPending: isUpdatePending, isError: isUpdateError, error: updateError,isSuccess:isUpdateSuccess } = useUpdateDocent();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  useEffect(() => {
+    if (isDeleteSuccess || isUpdateSuccess) {
+      setShowSuccessAlert(true);
+      const timer = setTimeout(() => {
+        setShowSuccessAlert(false);
+      }, 20000); // 20 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [isDeleteSuccess, isUpdateSuccess]);
+
+  useEffect(() => {
+    if (isDeleteError || isUpdateError) {
+      setShowErrorAlert(true);
+      const timer = setTimeout(() => {
+        setShowErrorAlert(false);
+      }, 20000); // 20 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [isDeleteError, isUpdateError]);
 
   const handleDeactivate = async (dni: string) => {
     await deleteDocent(dni);
@@ -82,8 +104,8 @@ const BoardDocent = () => {
             <MenuButtonComponent
               onEdit={() => handleSubmitUpdate(params.row)}
               onDeactivate={() => handleDeactivate(params.row.dni)}
-              isPendingDeactivate={isPendingDelete}
-              isPendingEdit={isPending}
+              isPendingDeactivate={isDeletePending}
+              isPendingEdit={isUpdatePending}
               title={`¿Desactivar docente ${params.row.fullName}?`}
               label={`Se desactivará permanentemente el docente con DNI ${params.row.dni}.`}
             >
@@ -126,18 +148,16 @@ const BoardDocent = () => {
       </Box>
     );
   }
-
-  // Verificar si hay algún error al cargar los datos
-  if (error) {
-    return (
-      <Typography color="error">
-        Error al cargar los docentes: {error.message}
-      </Typography>
-    );
-  }
-
+ 
   return (
+
     <Box sx={{ padding: 2 }}>
+      {showErrorAlert && (
+          <Alert severity="error">{getErrorMessage(deleteError || updateError)}</Alert>
+        )}
+        {showSuccessAlert && (
+          <Alert severity="success">Operación realizada exitosamente!</Alert>
+        )}
       <Typography variant="h4" gutterBottom>
         Historial de Docentes
       </Typography>

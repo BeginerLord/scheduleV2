@@ -4,18 +4,33 @@ import {
   useGetAllCourse,
   useUpdateCourseHook,
 } from "../../hooks";
-import { Box, CircularProgress, Paper, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, Paper, Typography } from "@mui/material";
 import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
 import { UpdateCourseEnrollmentDto } from "../../model";
 import MenuButtonComponent from "../../../Components/ui/buttonMenu";
 import style from "./BoardCourse.module.css";
 import FormUpdateCourse from "../FormUpdateCourse";
+import { getErrorMessage } from "../../../utils/errorUtils";
+import { useEffect, useState } from "react";
 
 const BoardCourse = () => {
   const { isLoading, course } = useGetAllCourse(0, 10, "name", "asc");
-  const { deleteCourseMutation: deleteCourse, isPending: isPendingDelete } =
-    useDeleteCourse();
-  const { updateCourseMutation, isPending } = useUpdateCourseHook();
+  const {
+    deleteCourseMutation: deleteCourse,
+    isPending: isPendingDelete,
+    isError: isDeleteError,
+    error: deleteError,
+    isSuccess: isDeleteSuccess,
+  } = useDeleteCourse();
+  const {
+    updateCourseMutation,
+    isPending,
+    isError: isUpdateError,
+    error: updateError,
+    isSuccess: isUpdateSuccess,
+  } = useUpdateCourseHook();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   const handleDeactivate = async (name: string) => {
     await deleteCourse(name);
@@ -43,15 +58,22 @@ const BoardCourse = () => {
   // Definir columnas del DataGrid
   const columns: GridColDef[] = [
     {
-      field: "name",
-      headerName: "Nombre del Curso",
-      width: 200,
+      field: "id",
+      headerName: "Id Curso",
+      width: 100,
       headerAlign: "left",
       align: "left",
     },
     {
+      field: "name",
+      headerName: "Nombre",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
       field: "cantHrs",
-      headerName: "Cantidad de Horas",
+      headerName: "Cantidad de horas",
       width: 150,
       headerAlign: "center",
       align: "center",
@@ -59,24 +81,39 @@ const BoardCourse = () => {
     {
       field: "level",
       headerName: "Nivel",
-      width: 180,
-      headerAlign: "center",
-      align: "center",
-    },
-    {
-      field: "dniProffesor",
-      headerName: "CC Docente",
-      width: 200,
+      width: 170,
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "idHorario",
-      headerName: "ID Horario",
+      field: "docenteCedula",
+      headerName: "Docente CC",
       width: 150,
       headerAlign: "left",
       align: "left",
     },
+    {
+      field: "codigoHorario",
+      headerName: "Horario code",
+      width: 150,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "fullName",
+      headerName: "Nombre completo",
+      width: 150,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "correo",
+      headerName: "correo electronico",
+      width: 150,
+      headerAlign: "left",
+      align: "left",
+    },
+
     {
       field: "actions",
       headerName: "Acciones",
@@ -111,14 +148,36 @@ const BoardCourse = () => {
 
   // Crear filas para el DataGrid
   const rows =
-    course?.content?.map((item) => ({
-      id: item.dniProffesor, // Usamos el DNI del profesor como ID único
-      name: item.name,
-      cantHrs: item.cantHrs,
-      level: item.level,
-      dniProffesor: item.dniProffesor,
-      idHorario: item.idHorario,
+    course?.content?.map((course) => ({
+      id: course.id, // Usamos el DNI como identificador único de cada fila
+      name: course.name || "",
+      cantHrs: course.cantHrs || "",
+      level: course.level || "",
+      docenteCedula: course.docenteCedula || "",
+      codigoHorario: course.codigoHorario || "",
+      fullName: course.fullName || "",
+      correo: course.correo || "",
     })) || [];
+    useEffect(() => {
+      if (isDeleteSuccess || isUpdateSuccess) {
+        setShowSuccessAlert(true);
+        const timer = setTimeout(() => {
+          setShowSuccessAlert(false);
+        }, 20000); // 20 seconds
+        return () => clearTimeout(timer);
+      }
+    }, [isDeleteSuccess, isUpdateSuccess]);
+  
+    useEffect(() => {
+      if (isDeleteError || isUpdateError) {
+        setShowErrorAlert(true);
+        const timer = setTimeout(() => {
+          setShowErrorAlert(false);
+        }, 20000); // 20 seconds
+        return () => clearTimeout(timer);
+      }
+    }, [isDeleteError, isUpdateError]);
+  
 
   if (isLoading) {
     return (
@@ -136,6 +195,13 @@ const BoardCourse = () => {
   }
 
   return (
+    <Box>
+     {showErrorAlert && (
+          <Alert severity="error">{getErrorMessage(deleteError || updateError)}</Alert>
+        )}
+        {showSuccessAlert && (
+          <Alert severity="success">Operación realizada exitosamente!</Alert>
+        )}
     <div className={style.container}>
       <Box sx={{ padding: 2 }}>
         <Typography variant="h4" gutterBottom>
@@ -167,6 +233,7 @@ const BoardCourse = () => {
         </Paper>
       </Box>
     </div>
+    </Box>
   );
 };
 

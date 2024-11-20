@@ -1,5 +1,5 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Box, CircularProgress, Paper, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, Paper, Typography } from "@mui/material";
 import {
   useDeleteSchedule,
   useGetAllSchedule,
@@ -9,6 +9,8 @@ import MenuButtonComponent from "../../../Components/ui/buttonMenu";
 import { UpdateScheduleDto } from "../../model/schedule";
 import useCustomerForm from "../../../hooksCustomForms/useCustomerForm";
 import FormUpdateSchedule from "../../../student/Components/formsUpdate";
+import { useEffect, useState } from "react";
+import { getErrorMessage } from "../../../utils/errorUtils";
 
 const ScheduleList = () => {
   const { isLoading, scheduleAll: schedules } = useGetAllSchedule(
@@ -17,9 +19,30 @@ const ScheduleList = () => {
     "startTime",
     "asc"
   );
-  const { deleteDchedule, isPending } = useDeleteSchedule();
-  const { isPending: isPendingUpdate, updateScheduleMutation } =
-    useUpdateSchedule();
+  const { deleteDchedule, isPending: isDeletePending, isError: isDeleteError, error: deleteError, isSuccess: isDeleteSuccess } = useDeleteSchedule();
+  const { updateScheduleMutation, isPending: isUpdatePending, isError: isUpdateError, error: updateError, isSuccess: isUpdateSuccess } = useUpdateSchedule();
+
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  useEffect(() => {
+    if (isDeleteSuccess || isUpdateSuccess) {
+      setShowSuccessAlert(true);
+      const timer = setTimeout(() => {
+        setShowSuccessAlert(false);
+      }, 20000); // 20 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [isDeleteSuccess, isUpdateSuccess]);
+
+  useEffect(() => {
+    if (isDeleteError || isUpdateError) {
+      setShowErrorAlert(true);
+      const timer = setTimeout(() => {
+        setShowErrorAlert(false);
+      }, 20000); // 20 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [isDeleteError, isUpdateError]);
 
   // Función para actualizar horario
   const updateScheduleSuccess = async (data: UpdateScheduleDto) => {
@@ -87,9 +110,9 @@ const ScheduleList = () => {
         >
           <MenuButtonComponent
             onEdit={() => handleSubmitUpdate(params.row)} // Enviar los datos del horario al formulario
-            isPendingEdit={isPendingUpdate}
+            isPendingEdit={isUpdatePending}
             onDeactivate={() => handleDeactivate(params.row.id)}
-            isPendingDeactivate={isPending}
+            isPendingDeactivate={isDeletePending}
             title={`¿Eliminar horario con ID ${params.row.id}?`}
             label={`Se eliminará permanentemente el horario con ID ${params.row.id}.`}
           >
@@ -128,9 +151,16 @@ const ScheduleList = () => {
       </Box>
     );
   }
+  
 
   return (
     <Box sx={{ padding: 2 }}>
+       {showErrorAlert && (
+          <Alert severity="error">{getErrorMessage(deleteError || updateError)}</Alert>
+        )}
+        {showSuccessAlert && (
+          <Alert severity="success">Operación realizada exitosamente!</Alert>
+        )}
       <Typography variant="h4" gutterBottom>
         Historial de horarios
       </Typography>

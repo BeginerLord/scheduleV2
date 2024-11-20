@@ -5,7 +5,7 @@ export const useDeleteCourse = () => {
     const queryClient = useQueryClient();
   
     // Hook que utiliza useMutation para realizar la mutación de eliminación
-    const { mutate: deleteCourseMutation, isPending } = useMutation({
+    const { mutate: deleteCourseMutation, isPending, isError, error,isSuccess } = useMutation({
       mutationFn: DeleteCourse,
       onSuccess: () => {
         // Invalida las consultas relacionadas con 'student' después de la eliminación
@@ -13,5 +13,5 @@ export const useDeleteCourse = () => {
       },
     });
   
-    return { deleteCourseMutation, isPending };
+    return { deleteCourseMutation, isPending,isError, error,isSuccess };
   };

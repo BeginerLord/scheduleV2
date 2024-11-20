@@ -4,7 +4,7 @@ import { deleteSchedule } from "../service/schedule";
 export const useDeleteSchedule = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: deleteDchedule, isPending } = useMutation({
+  const { mutate: deleteDchedule, isPending,isError, error, isSuccess } = useMutation({
     mutationFn: deleteSchedule,
 
     onSuccess: () => {
@@ -21,5 +21,5 @@ export const useDeleteSchedule = () => {
     },
   });
 
-  return { deleteDchedule, isPending };
+  return { deleteDchedule, isPending,isError, error, isSuccess };
 };

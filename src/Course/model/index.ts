@@ -1,6 +1,6 @@
 export interface CourseEnrollment {
   name: string;
-  cantHrs: number; // Cambiado a number
+  cantHrs: string; // Cambiado a number
   level: string;
   dniProffesor: string;
   idHorario: string;

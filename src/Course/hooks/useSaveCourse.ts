@@ -5,7 +5,7 @@ export const useSaveCourse = () => {
     const queryClient = useQueryClient();
   
     // Corrección aquí: No debes asignar `useMutation` como un objeto
-    const { mutate: saveCourseMutation, isPending } = useMutation({
+    const { mutate: saveCourseMutation, isPending, isError, error, isSuccess } = useMutation({
       mutationFn: SaveCourse,
       onSuccess: () => {
         // Se invalida la caché de la consulta para 'student' después de la mutación
@@ -13,6 +13,6 @@ export const useSaveCourse = () => {
       },
     });
   
-    return { saveCourseMutation, isPending };
+    return { saveCourseMutation, isPending, isError, error, isSuccess };
   };
   

@@ -4,7 +4,7 @@ import { SaveDocent } from "../services";
 export const useCreateDocent = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: createDocentMutation, isPending } = useMutation({
+  const { mutate: createDocentMutation, isPending, isError, error, isSuccess  } = useMutation({
     mutationFn: SaveDocent,
 
     onSuccess: () => {
@@ -21,5 +21,5 @@ export const useCreateDocent = () => {
     },
   });
 
-  return { createDocentMutation, isPending };
+  return { createDocentMutation, isPending, isError, error, isSuccess  };
 };

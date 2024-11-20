@@ -7,7 +7,7 @@ import { CourseEnrollment } from "../model";
 export const useUpdateCourseHook = () => {
     const queryClient = useQueryClient();
   
-    const { mutate: updateCourseMutation, isPending } = useMutation({
+    const { mutate: updateCourseMutation, isPending, isError, error, isSuccess  } = useMutation({
       mutationFn: ({ name, course }: { name: string; course: CourseEnrollment }) =>
         UpdateCourseByName(name, course),
       onSuccess: () => {
@@ -15,5 +15,5 @@ export const useUpdateCourseHook = () => {
       },
     });
   
-    return { updateCourseMutation, isPending };
+    return { updateCourseMutation, isPending, isError, error, isSuccess  };
   };

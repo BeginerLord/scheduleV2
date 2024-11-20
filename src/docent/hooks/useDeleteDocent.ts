@@ -4,7 +4,7 @@ import { DeleteDocent } from "../services";
 export const useDeleteDocent = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: deleteDocentMutate, isPending } = useMutation({
+  const { mutate: deleteDocentMutate, isPending,isError, error, isSuccess } = useMutation({
     mutationFn: DeleteDocent,
 
     onSuccess: () => {
@@ -21,5 +21,5 @@ export const useDeleteDocent = () => {
     },
   });
 
-  return { deleteDocentMutate, isPending };
+  return { deleteDocentMutate, isPending,isError, error,isSuccess };
 };

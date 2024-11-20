@@ -5,7 +5,7 @@ import { UpdateDocentByDni } from "../services";
 export const useUpdateDocent = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: updateDocentMutation, isPending } = useMutation({
+  const { mutate: updateDocentMutation, isPending, isError, error,isSuccess } = useMutation({
     mutationFn: ({ dni, docent }: { dni: string; docent: Docent }) =>
       UpdateDocentByDni(dni, docent),
 
@@ -23,5 +23,5 @@ export const useUpdateDocent = () => {
     },
   });
 
-  return { updateDocentMutation, isPending };
+  return { updateDocentMutation,isPending, isError, error,isSuccess};
 };
